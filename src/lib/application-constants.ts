@@ -40,3 +40,21 @@ export const APPLICATION_SOURCES = [
   { value: "networking", label: "Networking" },
   { value: "other", label: "Other" },
 ] as const;
+
+export const INTERVIEW_TYPES = [
+  { value: "phone", label: "Phone" },
+  { value: "video", label: "Video" },
+  { value: "onsite", label: "On-site" },
+  { value: "technical", label: "Technical" },
+  { value: "behavioral", label: "Behavioral" },
+  { value: "panel", label: "Panel" },
+  { value: "take_home", label: "Take-home" },
+  { value: "other", label: "Other" },
+] as const;
+
+export const INTERVIEW_RESULTS = [
+  { value: "unknown", label: "Not decided" },
+  { value: "passed", label: "Passed" },
+  { value: "failed", label: "Failed" },
+  { value: "cancelled", label: "Cancelled" },
+] as const;
