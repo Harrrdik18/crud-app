@@ -1,9 +1,15 @@
 import { eq } from "drizzle-orm";
-import { users, profiles, resumes } from "@/db/schema";
+import { users, profiles, resumes, sessions } from "@/db/schema";
 import { getDb } from "@/db";
 import { hashPassword, verifyPassword } from "@/lib/crypto";
 import { createSession, getUserById } from "@/lib/session";
-import { registerSchema, loginSchema, type RegisterInput, type LoginInput } from "@/lib/validation/schemas";
+import {
+  registerSchema,
+  loginSchema,
+  changePasswordSchema,
+  type RegisterInput,
+  type LoginInput,
+} from "@/lib/validation/schemas";
 
 export class AuthError extends Error {
   constructor(
@@ -103,6 +109,38 @@ export async function authenticateUser(
 
   const session = await createSession(db, row.id, ipAddress);
   return { user: { id: row.id }, sessionToken: session.token! };
+}
+
+export async function changePassword(
+  userId: string,
+  input: unknown,
+  db = getDb(),
+): Promise<void> {
+  const parsed = changePasswordSchema.safeParse(input);
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    throw new AuthError(issue?.message ?? "Invalid input", "VALIDATION");
+  }
+  const { currentPassword, newPassword } = parsed.data;
+
+  const rows = await db
+    .select({ passwordHash: users.passwordHash })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
+  const row = rows[0];
+  if (!row) throw new AuthError("User not found", "INVALID_CREDENTIALS");
+
+  const ok = await verifyPassword(currentPassword, row.passwordHash);
+  if (!ok) throw new AuthError("Current password is incorrect", "INVALID_CREDENTIALS");
+
+  const passwordHash = await hashPassword(newPassword);
+  await db
+    .update(users)
+    .set({ passwordHash, updatedAt: new Date() })
+    .where(eq(users.id, userId));
+
+  await db.delete(sessions).where(eq(sessions.userId, userId));
 }
 
 export async function fullUserProfile(userId: string, db = getDb()) {

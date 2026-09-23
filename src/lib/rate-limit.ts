@@ -16,9 +16,9 @@ const LIMITS: Record<string, { windowMs: number; max: number }> = {
 export function rateLimit(
   key: string,
   ip: string,
-  route: "auth:login" | "auth:register" | "auth:password",
+  route: "auth:login" | "auth:register" | "auth:password" | "auth:change-password",
 ): { allowed: boolean; retryAfterSeconds?: number } {
-  const limits = LIMITS[route];
+  const limits = LIMITS[route] ?? LIMITS["auth:password"];
   if (!limits) return { allowed: true };
 
   const full = `${key}:${ip}`;
