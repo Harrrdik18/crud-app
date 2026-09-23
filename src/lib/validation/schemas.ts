@@ -128,7 +128,6 @@ export type LoginInput = z.infer<typeof loginSchema>;
 /* ------------------------------------------------------------------ */
 
 export const profileSchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(80),
   headline: optionalText(200),
   location: optionalText(120),
   bio: optionalText(2000),
