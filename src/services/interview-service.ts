@@ -185,7 +185,8 @@ export async function updateInterview(
   const result = await db
     .update(interviews)
     .set(updateData)
-    .where(and(eq(interviews.id, interviewId), eq(interviews.userId, userId)));
+    .where(and(eq(interviews.id, interviewId), eq(interviews.userId, userId)))
+    .returning({ id: interviews.id });
 
   if (!result[0]) {
     throw new InterviewError("Interview not found", "NOT_FOUND");
@@ -199,7 +200,8 @@ export async function deleteInterview(
 ): Promise<void> {
   const result = await db
     .delete(interviews)
-    .where(and(eq(interviews.id, interviewId), eq(interviews.userId, userId)));
+    .where(and(eq(interviews.id, interviewId), eq(interviews.userId, userId)))
+    .returning({ id: interviews.id });
 
   if (!result[0]) {
     throw new InterviewError("Interview not found", "NOT_FOUND");

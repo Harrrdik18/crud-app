@@ -113,7 +113,7 @@ function mapRow(r: RawApplicationRow): ApplicationWithRelations {
 
 export async function listApplications(
   userId: string,
-  query: ApplicationQuery,
+  query: Partial<ApplicationQuery>,
   db = getDb(),
 ): Promise<PaginatedResult<ApplicationWithRelations>> {
   const page = query.page ?? 1;
@@ -264,7 +264,8 @@ export async function updateApplication(
   const result = await db
     .update(applications)
     .set({ ...parsed.data, updatedAt: new Date() })
-    .where(and(eq(applications.id, applicationId), eq(applications.userId, userId)));
+    .where(and(eq(applications.id, applicationId), eq(applications.userId, userId)))
+    .returning({ id: applications.id });
 
   if (!result[0]) {
     throw new ApplicationError("Application not found", "NOT_FOUND");
@@ -316,7 +317,8 @@ export async function deleteApplication(
 ): Promise<void> {
   const result = await db
     .delete(applications)
-    .where(and(eq(applications.id, applicationId), eq(applications.userId, userId)));
+    .where(and(eq(applications.id, applicationId), eq(applications.userId, userId)))
+    .returning({ id: applications.id });
 
   if (!result[0]) {
     throw new ApplicationError("Application not found", "NOT_FOUND");

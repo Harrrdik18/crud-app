@@ -180,7 +180,8 @@ export async function updateFollowUp(
   const result = await db
     .update(followUps)
     .set(updateData)
-    .where(and(eq(followUps.id, followUpId), eq(followUps.userId, userId)));
+    .where(and(eq(followUps.id, followUpId), eq(followUps.userId, userId)))
+    .returning({ id: followUps.id });
 
   if (!result[0]) {
     throw new Error("Follow-up not found");
@@ -194,7 +195,8 @@ export async function deleteFollowUp(
 ): Promise<void> {
   const result = await db
     .delete(followUps)
-    .where(and(eq(followUps.id, followUpId), eq(followUps.userId, userId)));
+    .where(and(eq(followUps.id, followUpId), eq(followUps.userId, userId)))
+    .returning({ id: followUps.id });
 
   if (!result[0]) {
     throw new Error("Follow-up not found");
