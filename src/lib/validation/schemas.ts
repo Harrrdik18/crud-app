@@ -79,12 +79,17 @@ export type SkillKind = (typeof SKILL_KINDS)[number];
 /* ------------------------------------------------------------------ */
 
 function emptyToNull(input: unknown): unknown {
+  if (input === undefined || input === null) return null;
   if (typeof input === "string" && input.trim() === "") return null;
   return input;
 }
 
 function maybeEmptyString(schema: z.ZodType<string>) {
   return z.preprocess(emptyToNull, schema.nullable());
+}
+
+function maybeEnum<T extends readonly [string, ...string[]]>(values: T) {
+  return z.preprocess(emptyToNull, z.enum(values).nullable());
 }
 
 function maybeNumber(schema: z.ZodType<number>) {
@@ -153,16 +158,16 @@ export const applicationSchema = z.object({
   title: z.string().trim().min(1, "Job title is required").max(200),
   url: maybeEmptyString(z.url("Enter a valid URL").max(500)),
   location: optionalText(150),
-  employmentType: z.enum(EMPLOYMENT_TYPES).nullable(),
+  employmentType: maybeEnum(EMPLOYMENT_TYPES),
   salaryMin: maybeNumber(z.number().int().min(0).max(100_000_000)),
   salaryMax: maybeNumber(z.number().int().min(0).max(100_000_000)),
   salaryCurrency: optionalText(8),
-  salaryInterval: z.enum(SALARY_INTERVALS).nullable(),
+  salaryInterval: maybeEnum(SALARY_INTERVALS),
   experience: optionalText(200),
   description: optionalText(20_000),
   status: z.enum(APPLICATION_STATUSES).default("applied"),
   appliedAt: z.string().regex(DATE_RE, "Use a valid date (YYYY-MM-DD)"),
-  source: z.enum(APPLICATION_SOURCES).nullable(),
+  source: maybeEnum(APPLICATION_SOURCES),
   notes: optionalText(10_000),
 });
 
@@ -176,7 +181,7 @@ export type ApplicationInput = z.infer<typeof applicationSchema>;
 /** Search/filter/sort query params used on the applications list page. */
 export const applicationQuerySchema = z.object({
   q: optionalText(100),
-  status: z.enum(APPLICATION_STATUSES).nullable(),
+  status: maybeEnum(APPLICATION_STATUSES),
   location: optionalText(100),
   from: optionalDate().nullable(),
   to: optionalDate().nullable(),
