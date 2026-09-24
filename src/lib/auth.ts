@@ -1,5 +1,6 @@
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 import { decodeSessionCookie, encodeSessionCookie } from "@/lib/crypto";
 import {
   findSessionByToken,
@@ -76,7 +77,11 @@ export interface SessionUser {
   name: string;
 }
 
-export async function getSessionUser(): Promise<SessionUser | null> {
+// Memoized per request (React `cache`): pages and layouts call getSessionUser /
+// optionalUser multiple times during one render; without this each call would
+// hit the DB (session + user) again. The cookie store is request-scoped so the
+// dedupe is naturally scoped to a single render pass.
+export const getSessionUser = cache(async (): Promise<SessionUser | null> => {
   const token = await getSessionToken();
   if (!token) return null;
   const session = await findSessionByToken(token);
@@ -90,7 +95,7 @@ export async function getSessionUser(): Promise<SessionUser | null> {
     return null;
   }
   return user;
-}
+});
 
 export async function requireUser(): Promise<SessionUser> {
   const user = await getSessionUser();
