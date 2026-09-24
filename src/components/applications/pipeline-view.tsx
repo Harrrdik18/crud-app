@@ -11,10 +11,9 @@ import { STATUS_ORDER } from "@/lib/application-constants";
 
 interface PipelineViewProps {
   grouped: Record<string, ApplicationWithRelations[]>;
-  userId: string;
 }
 
-export function PipelineView({ grouped, userId }: PipelineViewProps) {
+export function PipelineView({ grouped }: PipelineViewProps) {
   const [pendingId, setPendingId] = useState<string | null>(null);
 
   return (
@@ -50,7 +49,6 @@ export function PipelineView({ grouped, userId }: PipelineViewProps) {
                   setPendingId(null);
                 }
               }}
-              onView={() => {}}
               pendingId={pendingId}
             />
           ))}

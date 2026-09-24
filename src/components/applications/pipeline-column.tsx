@@ -9,11 +9,10 @@ interface PipelineColumnProps {
   applications: ApplicationWithRelations[];
   onStatusChange: (appId: string, newStatus: string) => void;
   onDelete: (appId: string) => void;
-  onView: (appId: string) => void;
   pendingId: string | null;
 }
 
-export function PipelineColumn({ status, applications, onStatusChange, onDelete, onView, pendingId }: PipelineColumnProps) {
+export function PipelineColumn({ status, applications, onStatusChange, onDelete, pendingId }: PipelineColumnProps) {
   return (
     <div className="flex flex-col min-w-[300px] max-w-[340px] w-full">
       <div className="mb-3 flex items-center justify-between">

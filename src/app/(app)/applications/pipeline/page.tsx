@@ -7,5 +7,5 @@ export default async function PipelinePage() {
   if (!user) return null; // middleware handles redirect
 
   const grouped = await getApplicationsByStatus(user.id);
-  return <PipelineView grouped={grouped} userId={user.id} />;
+  return <PipelineView grouped={grouped} />;
 }

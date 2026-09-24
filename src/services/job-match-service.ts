@@ -232,8 +232,8 @@ async function computeAndStoreMatch(
 
   // Experience match
   let meets = true;
-  let required = analyzed.experience;
-  let candidate = resumeYears ? `${resumeYears} years` : "Not specified";
+  const required = analyzed.experience;
+  const candidate = resumeYears ? `${resumeYears} years` : "Not specified";
   if (required) {
     const reqYrs = parseInt(required, 10);
     const candYrs = resumeYears ?? 0;

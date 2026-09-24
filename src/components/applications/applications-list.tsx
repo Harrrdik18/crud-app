@@ -67,26 +67,6 @@ function toFormQuery(q: ApplicationQuery): FormQuery {
   };
 }
 
-function toAppQuery(fq: FormQuery): ApplicationQuery {
-  const asStatus = (v: string): ApplicationStatus | null => {
-    return (STATUSES as readonly string[]).includes(v) ? (v as ApplicationStatus) : null;
-  };
-  const asSort = (v: string): ApplicationQuery["sort"] => {
-    const validSorts = ["newest", "oldest", "company", "status"] as const;
-    return validSorts.includes(v as typeof validSorts[number]) ? v as ApplicationQuery["sort"] : "newest";
-  };
-  return {
-    q: fq.q || null,
-    status: asStatus(fq.status),
-    location: fq.location || null,
-    from: fq.from || null,
-    to: fq.to || null,
-    sort: asSort(fq.sort),
-    page: fq.page,
-    pageSize: fq.pageSize,
-  };
-}
-
 export function ApplicationsList({ result, query }: ApplicationsListProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
