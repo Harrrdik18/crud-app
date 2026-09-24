@@ -1,27 +1,26 @@
-/** In-memory sliding-window rate limiter keyed by IP + route.
+/** In-memory sliding-window rate limiter keyed by route + identity (IP).
  *  Suitable for single-instance deployments. For multi-region scale,
  *  swap for a shared store (Redis) — see docs/scale notes. */
+
+type RateLimitRoute = "auth:register" | "auth:login" | "auth:change-password";
 
 interface Bucket {
   hits: number[];
 }
 
 const buckets = new Map<string, Bucket>();
-const LIMITS: Record<string, { windowMs: number; max: number }> = {
+const LIMITS: Record<RateLimitRoute, { windowMs: number; max: number }> = {
   "auth:login": { windowMs: 15 * 60 * 1000, max: 20 },
   "auth:register": { windowMs: 60 * 60 * 1000, max: 10 },
-  "auth:password": { windowMs: 60 * 60 * 1000, max: 5 },
+  "auth:change-password": { windowMs: 60 * 60 * 1000, max: 5 },
 };
 
 export function rateLimit(
-  key: string,
-  ip: string,
-  route: "auth:login" | "auth:register" | "auth:password" | "auth:change-password",
+  route: RateLimitRoute,
+  identity: string,
 ): { allowed: boolean; retryAfterSeconds?: number } {
-  const limits = LIMITS[route] ?? LIMITS["auth:password"];
-  if (!limits) return { allowed: true };
-
-  const full = `${key}:${ip}`;
+  const limits = LIMITS[route];
+  const full = `${route}:${identity}`;
   const now = Date.now();
   let bucket = buckets.get(full);
   if (!bucket) {

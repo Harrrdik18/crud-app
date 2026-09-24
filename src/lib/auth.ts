@@ -5,7 +5,7 @@ import {
   findSessionByToken,
   deleteSessionByToken,
   getUserById,
-  SESSION_TTL_MS,
+  SESSION_COOKIE_MAX_AGE_S,
 } from "@/lib/session";
 
 export const SESSION_COOKIE = "jh_session";
@@ -32,7 +32,7 @@ export async function setSessionCookie(token: string) {
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-    maxAge: Math.floor(SESSION_TTL_MS / 1000),
+    maxAge: SESSION_COOKIE_MAX_AGE_S,
   });
 }
 
@@ -41,10 +41,32 @@ export async function clearSessionCookie() {
   store.set(SESSION_COOKIE, "", { httpOnly: true, path: "/", maxAge: 0 });
 }
 
+function isIpAddress(value: string): boolean {
+  // IPv4 (ciphers.codes/network, dotted decimal only)
+  if (/^\d{1,3}(\.\d{1,3}){3}$/.test(value)) {
+    return value.split(".").every((octet) => Number(octet) <= 255);
+  }
+  // IPv6 (loose validation)
+  if (value.includes(":")) {
+    return /^[0-9a-fA-F:]+$/.test(value) && value.split(":").length >= 3;
+  }
+  return false;
+}
+
 export async function getClientIp(): Promise<string> {
   const h = await headers();
+  // When behind a single trusted proxy/load-balancer the right-most
+  // x-forwarded-for hop is the real client (the proxy appended it); anything a
+  // client sends gets prepended. Walk from the right and stop at the first
+  // syntactically valid address to avoid trusting spoofed hops.
   const fwd = h.get("x-forwarded-for");
-  if (fwd) return fwd.split(",")[0].trim();
+  if (fwd) {
+    const hops = fwd.split(",").map((s) => s.trim()).filter(Boolean).reverse();
+    for (const hop of hops) {
+      const clean = hop.replace(/^\[|\]$/g, "").split("%")[0];
+      if (isIpAddress(clean)) return clean;
+    }
+  }
   return "unknown";
 }
 

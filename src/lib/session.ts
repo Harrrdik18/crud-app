@@ -4,6 +4,10 @@ import { getDb } from "@/db";
 import { generateSessionToken, hashToken } from "@/lib/crypto";
 
 export const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+// Cookie outlives the DB TTL on purpose: the DB is the session authority,
+// so an idle user is logged out (cookie cleared) right when their session
+// expires, while an active user's cookie never gets dropped out from under them.
+export const SESSION_COOKIE_MAX_AGE_S = 90 * 24 * 60 * 60; // 90 days
 
 export interface Session {
   id: string;
@@ -44,7 +48,22 @@ export async function findSessionByToken(
     .from(sessions)
     .where(and(eq(sessions.tokenHash, tokenHash), gt(sessions.expiresAt, new Date())))
     .limit(1);
-  return rows[0] ?? null;
+  const session = rows[0] ?? null;
+  if (!session) return null;
+
+  // Sliding TTL: renew once a session is past its halfway point so an active
+  // user's session never lapses while they're using the app.
+  const remaining = session.expiresAt.getTime() - Date.now();
+  if (remaining < SESSION_TTL_MS / 2) {
+    const renewedAt = new Date(Date.now() + SESSION_TTL_MS);
+    await db
+      .update(sessions)
+      .set({ expiresAt: renewedAt })
+      .where(eq(sessions.id, session.id));
+    session.expiresAt = renewedAt;
+  }
+
+  return session;
 }
 
 export async function deleteSessionByToken(token: string, db = getDb()): Promise<void> {

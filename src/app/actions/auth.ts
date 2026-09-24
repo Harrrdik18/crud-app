@@ -21,7 +21,7 @@ export async function registerAction(
   formData: FormData,
 ): Promise<AuthFormState> {
   const ip = await getClientIp();
-  const rl = rateLimit("auth:register", ip, "auth:register");
+  const rl = rateLimit("auth:register", ip);
   if (!rl.allowed) {
     return {
       error: `Too many attempts. Please try again in ${rl.retryAfterSeconds}s.`,
@@ -40,9 +40,7 @@ export async function registerAction(
     token = res.sessionToken;
   } catch (err) {
     if (err instanceof AuthError) {
-      return err.code === "VALIDATION"
-        ? { error: err.message }
-        : { error: err.message };
+      return { error: err.message };
     }
     console.error("register failed", err);
     return { error: "Something went wrong. Please try again." };
@@ -58,7 +56,7 @@ export async function loginAction(
   formData: FormData,
 ): Promise<AuthFormState> {
   const ip = await getClientIp();
-  const rl = rateLimit("auth:login", ip, "auth:login");
+  const rl = rateLimit("auth:login", ip);
   if (!rl.allowed) {
     return {
       error: `Too many login attempts. Please try again in ${rl.retryAfterSeconds}s.`,
@@ -101,7 +99,7 @@ export async function changePasswordAction(
   if (!user) return { error: "Not authenticated" };
 
   const ip = await getClientIp();
-  const rl = rateLimit("auth:change-password", ip, "auth:change-password");
+  const rl = rateLimit("auth:change-password", ip);
   if (!rl.allowed) {
     return {
       error: `Too many attempts. Please try again in ${rl.retryAfterSeconds}s.`,
