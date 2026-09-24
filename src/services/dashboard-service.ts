@@ -195,28 +195,39 @@ export async function getRecentApplications(userId: string, limit = 5, db = getD
   }));
 }
 
+/** Monday 00:00 UTC of the week containing `d` (matches Postgres date_trunc('week')). */
+function startOfUtcWeek(d: Date): Date {
+  const monday = new Date(d);
+  monday.setUTCHours(0, 0, 0, 0);
+  monday.setUTCDate(monday.getUTCDate() - ((monday.getUTCDay() + 6) % 7));
+  return monday;
+}
+
 export async function getApplicationsByWeek(userId: string, weeks = 12, db = getDb()) {
   const now = new Date();
-  const start = new Date(now.getTime() - weeks * 7 * 24 * 60 * 60 * 1000);
-  start.setDate(start.getDate() - start.getDay()); // Start of week
+  const currentWeekStart = startOfUtcWeek(now);
+  const start = new Date(currentWeekStart);
+  start.setUTCDate(start.getUTCDate() - (weeks - 1) * 7);
+
+  // Format the bucket key in SQL: drizzle's postgres-js driver returns date OIDs as
+  // raw strings, so the row value never has a toISOString() to call.
+  const weekBucket = sql<string>`to_char(date_trunc('week', ${applications.createdAt}), 'YYYY-MM-DD')`;
 
   const rows = await db
-    .select({
-      weekStart: sql<Date>`date_trunc('week', ${applications.createdAt})::date`,
-      count: count(),
-    })
+    .select({ weekStart: weekBucket, count: count() })
     .from(applications)
     .where(and(eq(applications.userId, userId), gte(applications.createdAt, start)))
-    .groupBy(sql`date_trunc('week', ${applications.createdAt})`)
-    .orderBy(sql`date_trunc('week', ${applications.createdAt})`);
+    .groupBy(weekBucket)
+    .orderBy(weekBucket);
+
+  const countsByWeek = new Map(rows.map((r) => [r.weekStart, Number(r.count)]));
 
   const result: { week: string; count: number }[] = [];
-  const current = new Date(start);
-  while (current <= now) {
-    const weekStr = current.toISOString().split("T")[0];
-    const found = rows.find((r) => r.weekStart.toISOString().split("T")[0] === weekStr);
-    result.push({ week: weekStr, count: Number(found?.count ?? 0) });
-    current.setDate(current.getDate() + 7);
+  const cursor = new Date(start);
+  while (cursor <= now) {
+    const week = cursor.toISOString().slice(0, 10);
+    result.push({ week, count: countsByWeek.get(week) ?? 0 });
+    cursor.setUTCDate(cursor.getUTCDate() + 7);
   }
   return result;
 }
