@@ -1,5 +1,5 @@
 import { getSessionUser } from "@/lib/auth";
-import { ApplicationForm } from "@/components/application/application-form";
+import { ApplicationForm } from "@/components/applications/application-form";
 import { createApplicationAction } from "@/app/actions/applications";
 
 export default async function NewApplicationPage() {

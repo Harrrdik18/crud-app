@@ -1,6 +1,6 @@
 import { getSessionUser } from "@/lib/auth";
 import { listInterviews } from "@/services/interview-service";
-import { InterviewsList } from "./interviews-list";
+import { InterviewsList } from "@/components/interviews/interviews-list";
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

@@ -1,4 +1,4 @@
-import { eq, and, desc, asc, count, gte, lte } from "drizzle-orm";
+import { eq, and, desc, count, gte, lte } from "drizzle-orm";
 import {
   interviews,
   applications,

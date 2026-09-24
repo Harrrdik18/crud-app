@@ -1,7 +1,7 @@
 import { getSessionUser } from "@/lib/auth";
 import { getFollowUpById } from "@/services/followup-service";
 import { notFound } from "next/navigation";
-import { FollowUpDetail } from "@/components/followup/followup-detail";
+import { FollowUpDetail } from "@/components/follow-ups/follow-up-detail";
 
 interface PageProps {
   params: Promise<{ id: string }>;

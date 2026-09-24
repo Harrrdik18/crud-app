@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Briefcase, BarChart3 } from "lucide-react";
 import type { DashboardStats, FunnelData } from "@/services/dashboard-service";
+import { STATUS_LABELS, SOURCE_LABELS } from "@/lib/application-constants";
 
 interface AnalyticsViewProps {
   stats: DashboardStats;
@@ -16,27 +17,6 @@ interface AnalyticsViewProps {
   byWeek: { week: string; count: number }[];
   funnel: FunnelData[];
 }
-
-const STATUS_LABELS: Record<string, string> = {
-  saved: "Saved",
-  applied: "Applied",
-  screening: "Screening",
-  interview: "Interview",
-  offer: "Offer",
-  rejected: "Rejected",
-  withdrawn: "Withdrawn",
-};
-
-const SOURCE_LABELS: Record<string, string> = {
-  linkedin: "LinkedIn",
-  indeed: "Indeed",
-  company_website: "Company site",
-  referral: "Referral",
-  recruiter: "Recruiter",
-  job_board: "Job board",
-  networking: "Networking",
-  other: "Other",
-};
 
 function Bar({ value, max, color }: { value: number; max: number; color: string }) {
   const w = max === 0 ? 0 : Math.round((value / max) * 100);
@@ -52,6 +32,7 @@ function Bar({ value, max, color }: { value: number; max: number; color: string 
 export function AnalyticsView({ stats, byStatus, bySource, topSkills, companies, byWeek, funnel }: AnalyticsViewProps) {
   const hasData = stats.totalApplications > 0;
   const maxStatus = Math.max(1, ...byStatus.map((s) => s.count));
+  const maxSource = Math.max(1, ...bySource.map((s) => s.count));
   const maxWeek = Math.max(1, ...byWeek.map((w) => w.count));
   const maxSkill = Math.max(1, ...topSkills.map((s) => s.count));
   const maxCompany = Math.max(1, ...companies.map((c) => c.count));
@@ -138,7 +119,7 @@ export function AnalyticsView({ stats, byStatus, bySource, topSkills, companies,
                   <span className="text-slate-600 dark:text-slate-300">{SOURCE_LABELS[s.source] ?? s.source}</span>
                   <span className="font-medium text-slate-900 dark:text-white">{s.count}</span>
                 </div>
-                <Bar value={s.count} max={maxSource(bySource)} color="bg-emerald-500" />
+                <Bar value={s.count} max={maxSource} color="bg-emerald-500" />
               </div>
             ))}
           </CardContent>
@@ -206,8 +187,4 @@ export function AnalyticsView({ stats, byStatus, bySource, topSkills, companies,
       </Card>
     </div>
   );
-}
-
-function maxSource(bySource: { source: string; count: number }[]): number {
-  return Math.max(1, ...bySource.map((s) => s.count));
 }

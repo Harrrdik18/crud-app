@@ -1,7 +1,7 @@
 import { getSessionUser } from "@/lib/auth";
 import { getApplicationById } from "@/services/application-service";
 import { notFound } from "next/navigation";
-import { ApplicationDetail } from "@/components/application/application-detail";
+import { ApplicationDetail } from "@/components/applications/application-detail";
 import { STATUS_ORDER } from "@/lib/application-constants";
 
 interface PageProps {

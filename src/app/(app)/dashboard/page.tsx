@@ -7,7 +7,7 @@ import {
   getRecentApplications,
   getApplicationsByWeek,
 } from "@/services/dashboard-service";
-import { DashboardView } from "./dashboard-view";
+import { DashboardView } from "@/components/dashboard/dashboard-view";
 
 export default async function DashboardPage() {
   const user = await getSessionUser();

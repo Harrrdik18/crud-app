@@ -1,4 +1,4 @@
-import { eq, and, desc, asc, count, gte, lte, sql } from "drizzle-orm";
+import { eq, and, count, asc } from "drizzle-orm";
 import {
   followUps,
   applications,

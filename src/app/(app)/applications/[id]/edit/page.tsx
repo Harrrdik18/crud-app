@@ -1,7 +1,7 @@
 import { getSessionUser } from "@/lib/auth";
 import { getApplicationById } from "@/services/application-service";
 import { notFound } from "next/navigation";
-import { ApplicationForm } from "@/components/application/application-form";
+import { ApplicationForm } from "@/components/applications/application-form";
 import { updateApplicationAction } from "@/app/actions/applications";
 
 interface PageProps {

@@ -1,5 +1,5 @@
 import { getSessionUser } from "@/lib/auth";
-import { InterviewForm } from "@/components/interview/interview-form";
+import { InterviewForm } from "@/components/interviews/interview-form";
 
 export default async function NewInterviewPage() {
   const user = await getSessionUser();

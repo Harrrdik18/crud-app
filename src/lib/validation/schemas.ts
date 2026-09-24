@@ -219,10 +219,6 @@ export const followUpSchema = z.object({
 
 export type FollowUpInput = z.infer<typeof followUpSchema>;
 
-export const followUpStatusUpdateSchema = z.object({
-  status: z.enum(FOLLOW_UP_STATUSES),
-});
-
 /* ------------------------------------------------------------------ */
 /*  Notes                                                              */
 /* ------------------------------------------------------------------ */

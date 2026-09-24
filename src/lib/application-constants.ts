@@ -10,6 +10,17 @@ export const STATUS_LABELS: Record<string, string> = {
   withdrawn: "Withdrawn",
 };
 
+export const SOURCE_LABELS: Record<string, string> = {
+  linkedin: "LinkedIn",
+  indeed: "Indeed",
+  company_website: "Company site",
+  referral: "Referral",
+  recruiter: "Recruiter",
+  job_board: "Job board",
+  networking: "Networking",
+  other: "Other",
+};
+
 export const STATUS_COLORS: Record<string, "default" | "primary" | "success" | "warning" | "danger" | "info"> = {
   saved: "default",
   applied: "info",

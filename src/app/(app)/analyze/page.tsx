@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getSessionUser } from "@/lib/auth";
 import { listApplications } from "@/services/application-service";
-import { AnalyzeForm } from "./analyze-form";
+import { AnalyzeForm } from "@/components/analyze/analyze-form";
 
 export const metadata: Metadata = { title: "Job Match" };
 

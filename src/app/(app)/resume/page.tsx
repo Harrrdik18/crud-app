@@ -1,6 +1,6 @@
 import { getSessionUser } from "@/lib/auth";
 import { getResume, getSkills } from "@/services/profile-service";
-import { ResumeView } from "@/components/profile/resume-view";
+import { ResumeView } from "@/components/resume/resume-view";
 
 export default async function ResumePage() {
   const user = await getSessionUser();

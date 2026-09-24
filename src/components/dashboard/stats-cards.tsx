@@ -1,6 +1,5 @@
 "use client";
 
-import { formatRelative } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { TrendingUp, Users, Briefcase, Target, Award, XCircle, BarChart3, Clock } from "lucide-react";

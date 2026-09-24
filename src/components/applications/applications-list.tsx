@@ -4,14 +4,13 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Field, Input, Select } from "@/components/ui/field";
-import { ApplicationCard } from "@/components/application/application-card";
-import { EmptyState, Spinner } from "@/components/ui/feedback";
+import { EmptyState } from "@/components/ui/feedback";
 import { Badge } from "@/components/ui/badge";
 import { PaginatedResult } from "@/services/application-service";
 import { ApplicationQuery, ApplicationStatus } from "@/lib/validation/schemas";
-import { STATUS_LABELS, STATUS_COLORS, EMPLOYMENT_TYPES } from "@/lib/application-constants";
+import { STATUS_LABELS, STATUS_COLORS } from "@/lib/application-constants";
 import { formatDate, salaryLabel } from "@/lib/utils";
-import { Search, X, ChevronLeft, ChevronRight, Filter, Briefcase, MapPin, DollarSign, Calendar } from "lucide-react";
+import { Search, X, ChevronLeft, ChevronRight, Briefcase, MapPin, DollarSign } from "lucide-react";
 import { useState } from "react";
 
 interface ApplicationsListProps {
@@ -117,7 +116,7 @@ export function ApplicationsList({ result, query }: ApplicationsListProps) {
     router.push("/applications");
   };
 
-const hasFilters = Boolean(localQuery.q || localQuery.status || localQuery.location || localQuery.from || localQuery.to);
+  const hasFilters = Boolean(localQuery.q || localQuery.status || localQuery.location || localQuery.from || localQuery.to);
 
   return (
     <div className="space-y-6">

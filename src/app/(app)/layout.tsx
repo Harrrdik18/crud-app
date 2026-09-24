@@ -1,4 +1,4 @@
-import { AppShell } from "@/components/app/app-shell";
+import { AppShell } from "@/components/layout/app-shell";
 import { optionalUser } from "@/lib/auth";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {

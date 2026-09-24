@@ -1,6 +1,6 @@
 import { getSessionUser } from "@/lib/auth";
 import { getApplicationsByStatus } from "@/services/application-service";
-import { PipelineView } from "./pipeline-view";
+import { PipelineView } from "@/components/applications/pipeline-view";
 
 export default async function PipelinePage() {
   const user = await getSessionUser();

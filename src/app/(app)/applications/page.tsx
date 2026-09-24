@@ -1,6 +1,6 @@
 import { getSessionUser } from "@/lib/auth";
 import { listApplications } from "@/services/application-service";
-import { ApplicationsList } from "./applications-list";
+import { ApplicationsList } from "@/components/applications/applications-list";
 import { applicationQuerySchema, type ApplicationQuery } from "@/lib/validation/schemas";
 
 interface PageProps {

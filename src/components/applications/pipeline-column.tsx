@@ -2,7 +2,7 @@
 
 import { ApplicationCard } from "./application-card";
 import type { ApplicationWithRelations } from "@/services/application-service";
-import { STATUS_LABELS, STATUS_ORDER } from "@/lib/application-constants";
+import { STATUS_LABELS } from "@/lib/application-constants";
 
 interface PipelineColumnProps {
   status: string;

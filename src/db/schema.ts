@@ -1,4 +1,3 @@
-import { relations } from "drizzle-orm";
 import {
   date,
   index,
@@ -441,52 +440,3 @@ export const matches = pgTable(
     index("matches_analysis_id_idx").on(table.analysisId),
   ],
 );
-
-/* ------------------------------------------------------------------ */
-/*  Relations                                                          */
-/* ------------------------------------------------------------------ */
-
-export const usersRelations = relations(users, ({ one, many }) => ({
-  profile: one(profiles, { fields: [users.id], references: [profiles.userId] }),
-  resume: one(resumes, { fields: [users.id], references: [resumes.userId] }),
-  applications: many(applications),
-  skills: many(skills),
-  sessions: many(sessions),
-}));
-
-export const applicationsRelations = relations(applications, ({ one, many }) => ({
-  user: one(users, { fields: [applications.userId], references: [users.id] }),
-  interviews: many(interviews),
-  followUps: many(followUps),
-  notes: many(notes),
-  statusHistory: many(statusHistory),
-  matches: many(matches),
-}));
-
-export const interviewsRelations = relations(interviews, ({ one }) => ({
-  application: one(applications, {
-    fields: [interviews.applicationId],
-    references: [applications.id],
-  }),
-}));
-
-export const followUpsRelations = relations(followUps, ({ one }) => ({
-  application: one(applications, {
-    fields: [followUps.applicationId],
-    references: [applications.id],
-  }),
-}));
-
-export const notesRelations = relations(notes, ({ one }) => ({
-  application: one(applications, {
-    fields: [notes.applicationId],
-    references: [applications.id],
-  }),
-}));
-
-export const statusHistoryRelations = relations(statusHistory, ({ one }) => ({
-  application: one(applications, {
-    fields: [statusHistory.applicationId],
-    references: [applications.id],
-  }),
-}));

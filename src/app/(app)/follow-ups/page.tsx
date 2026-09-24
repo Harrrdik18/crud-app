@@ -1,6 +1,6 @@
 import { getSessionUser } from "@/lib/auth";
 import { listFollowUps } from "@/services/followup-service";
-import { FollowUpsList } from "./followups-list";
+import { FollowUpsList } from "@/components/follow-ups/follow-ups-list";
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

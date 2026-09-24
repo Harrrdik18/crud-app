@@ -1,7 +1,7 @@
 import { getSessionUser } from "@/lib/auth";
 import { getInterviewById } from "@/services/interview-service";
 import { notFound } from "next/navigation";
-import { InterviewDetail } from "@/components/interview/interview-detail";
+import { InterviewDetail } from "@/components/interviews/interview-detail";
 
 interface PageProps {
   params: Promise<{ id: string }>;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { changeStatusAction, deleteApplicationAction } from "@/app/actions/applications";
-import { PipelineColumn } from "@/components/application/pipeline-column";
+import { PipelineColumn } from "@/components/applications/pipeline-column";
 import { ApplicationWithRelations } from "@/services/application-service";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";

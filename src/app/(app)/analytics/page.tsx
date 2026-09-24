@@ -9,7 +9,7 @@ import {
   getFunnelData,
   getDashboardStats,
 } from "@/services/dashboard-service";
-import { AnalyticsView } from "./analytics-view";
+import { AnalyticsView } from "@/components/analytics/analytics-view";
 
 export const metadata: Metadata = { title: "Analytics" };
 
