@@ -10,7 +10,6 @@ import {
   followUpSchema,
   resumeSchema,
   jobAnalysisRequestSchema,
-  firstIssue,
   safeParse,
 } from "@/lib/validation/schemas";
 

@@ -18,7 +18,7 @@ async function userWithApp() {
 describe("interview-service integration", () => {
   it("creates and reads an interview linked to an application", async () => {
     const { userId, appId } = await userWithApp();
-    const created = await createInterview(
+    await createInterview(
       userId,
       {
         applicationId: appId,

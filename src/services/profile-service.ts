@@ -3,9 +3,6 @@ import {
   profiles,
   resumes,
   skills,
-  type Experience,
-  type Education,
-  type Project,
 } from "@/db/schema";
 import { getDb } from "@/db";
 import { profileSchema, resumeSchema, skillsBulkSchema } from "@/lib/validation/schemas";

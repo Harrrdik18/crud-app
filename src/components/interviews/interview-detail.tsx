@@ -4,13 +4,12 @@ import { formatRelative } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert } from "@/components/ui/feedback";
 import { deleteInterviewAction, updateInterviewAction } from "@/app/actions/interviews-followups";
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Calendar, Clock, User, MapPin, CheckCircle2, XCircle, Edit } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, User, MapPin, Edit } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { INTERVIEW_TYPES, INTERVIEW_RESULTS, STATUS_COLORS } from "@/lib/application-constants";
+import { INTERVIEW_TYPES, INTERVIEW_RESULTS } from "@/lib/application-constants";
 
 type UpdateInterviewAction = (interviewId: string, prev: unknown, formData: FormData) => Promise<{ error?: string }>;
 type DeleteInterviewAction = (interviewId: string) => Promise<void>;
@@ -41,7 +40,6 @@ interface InterviewDetailProps {
 export function InterviewDetail({ interview }: InterviewDetailProps) {
   const [deleting, setDeleting] = useState(false);
 
-  const typeLabel = INTERVIEW_TYPES.find((t) => t.value === interview.type)?.label ?? interview.type;
   const resultLabel = INTERVIEW_RESULTS.find((r) => r.value === interview.result)?.label ?? interview.result;
   const resultColor = interview.result === "passed" ? "success" : interview.result === "failed" ? "danger" : "default";
 

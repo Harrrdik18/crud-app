@@ -4,7 +4,7 @@ import {
   applications,
 } from "@/db/schema";
 import { getDb } from "@/db";
-import { followUpSchema, type FollowUpInput } from "@/lib/validation/schemas";
+import { followUpSchema } from "@/lib/validation/schemas";
 
 export class FollowUpError extends Error {
   constructor(

@@ -4,13 +4,12 @@ import { formatDate, salaryLabel } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert } from "@/components/ui/feedback";
 import { changeStatusAction, deleteApplicationAction } from "@/app/actions/applications";
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, MapPin, DollarSign, Briefcase, Calendar, Clock, BriefcaseBusiness } from "lucide-react";
+import { ArrowLeft, MapPin, DollarSign, Calendar, Clock, BriefcaseBusiness } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { STATUS_LABELS, STATUS_ORDER, STATUS_COLORS, EMPLOYMENT_TYPES } from "@/lib/application-constants";
+import { STATUS_LABELS, STATUS_COLORS, EMPLOYMENT_TYPES } from "@/lib/application-constants";
 import type { ApplicationWithRelations } from "@/services/application-service";
 
 interface ApplicationDetailProps {

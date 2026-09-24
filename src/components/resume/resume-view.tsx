@@ -6,8 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/feedback";
 import Link from "next/link";
-import { Plus, Edit, ExternalLink } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Plus } from "lucide-react";
 import type { Experience, Education, Project, skills as skillsTable } from "@/db/schema";
 
 type SkillRow = typeof skillsTable.$inferSelect;

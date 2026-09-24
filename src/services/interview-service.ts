@@ -4,7 +4,7 @@ import {
   applications,
 } from "@/db/schema";
 import { getDb } from "@/db";
-import { interviewSchema, type InterviewInput } from "@/lib/validation/schemas";
+import { interviewSchema } from "@/lib/validation/schemas";
 
 export class InterviewError extends Error {
   constructor(

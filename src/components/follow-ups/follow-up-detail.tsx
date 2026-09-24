@@ -4,13 +4,12 @@ import { formatRelative, formatDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert } from "@/components/ui/feedback";
 import { deleteFollowUpAction, updateFollowUpAction } from "@/app/actions/interviews-followups";
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Calendar, CheckCircle2, XCircle, Edit } from "lucide-react";
+import { ArrowLeft, Calendar, Edit } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { STATUS_LABELS, STATUS_COLORS } from "@/lib/application-constants";
+import { STATUS_COLORS } from "@/lib/application-constants";
 
 interface FollowUpDetailProps {
   followUp: {

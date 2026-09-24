@@ -6,14 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Field, Input, Textarea } from "@/components/ui/field";
 import { Alert, Spinner } from "@/components/ui/feedback";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, AtSign, Globe, Link2 } from "lucide-react";
-
-interface ActionResult {
-  error?: string;
-}
+import { ArrowLeft } from "lucide-react";
 
 interface ProfileFormProps {
   initialData: {

@@ -3,18 +3,13 @@
 import { useState } from "react";
 import { updateResumeAction } from "@/app/actions/profile";
 import { Button } from "@/components/ui/button";
-import { Field, Input, Textarea, Select } from "@/components/ui/field";
+import { Field, Input, Textarea } from "@/components/ui/field";
 import { Alert, Spinner } from "@/components/ui/feedback";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import type { Experience, Education, Project } from "@/db/schema";
-
-interface ActionResult {
-  error?: string;
-}
 
 interface ResumeEditFormProps {
   resume: {
@@ -69,7 +64,7 @@ export function ResumeEditForm({ resume, skills }: ResumeEditFormProps) {
   const [projects, setProjects] = useState<Project[]>(
     resume?.projects?.length ? resume.projects : [emptyProject()],
   );
-  const [skillNames, setSkillNames] = useState<string>(
+  const [skillNames] = useState<string>(
     skills.map((s) => s.name).join(", "),
   );
 

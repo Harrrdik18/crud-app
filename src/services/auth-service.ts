@@ -7,8 +7,6 @@ import {
   registerSchema,
   loginSchema,
   changePasswordSchema,
-  type RegisterInput,
-  type LoginInput,
 } from "@/lib/validation/schemas";
 
 export class AuthError extends Error {

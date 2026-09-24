@@ -13,11 +13,10 @@ import { Button } from "@/components/ui/button";
 import { Field, Input, Textarea, Select } from "@/components/ui/field";
 import { Alert, Spinner } from "@/components/ui/feedback";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import { INTERVIEW_TYPES, INTERVIEW_RESULTS } from "@/lib/application-constants";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Calendar, Clock, User, MapPin } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 interface ActionResult {
   error?: string;

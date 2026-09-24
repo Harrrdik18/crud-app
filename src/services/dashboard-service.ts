@@ -3,7 +3,6 @@ import {
   applications,
   interviews,
   followUps,
-  statusHistory,
 } from "@/db/schema";
 import { getDb } from "@/db";
 import type { ApplicationStatus } from "@/lib/validation/schemas";

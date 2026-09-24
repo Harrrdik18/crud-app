@@ -15,7 +15,6 @@ import {
   deleteFollowUp,
   FollowUpError,
 } from "@/services/followup-service";
-import { interviewSchema, followUpSchema } from "@/lib/validation/schemas";
 
 export interface ActionResult {
   ok?: boolean;

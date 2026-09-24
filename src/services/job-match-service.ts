@@ -1,5 +1,5 @@
 import { eq, and, desc } from "drizzle-orm";
-import { jobAnalyses, matches, applications, resumes, skills } from "@/db/schema";
+import { jobAnalyses, matches, applications } from "@/db/schema";
 import { getDb } from "@/db";
 import { analyzeJob, skillMatches } from "@/lib/analyzer";
 import { jobAnalysisRequestSchema } from "@/lib/validation/schemas";
@@ -226,7 +226,6 @@ async function computeAndStoreMatch(
       : (matchCount / requiredCount) * 100,
   );
 
-  const experiencesScore = 65; // base
   const depthAssessment =
     requiredCount === 0 ? null : Math.round((matchCount / requiredCount) * 100);
 

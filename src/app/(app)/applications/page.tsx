@@ -1,7 +1,7 @@
 import { getSessionUser } from "@/lib/auth";
 import { listApplications } from "@/services/application-service";
 import { ApplicationsList } from "@/components/applications/applications-list";
-import { applicationQuerySchema, type ApplicationQuery } from "@/lib/validation/schemas";
+import { applicationQuerySchema } from "@/lib/validation/schemas";
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

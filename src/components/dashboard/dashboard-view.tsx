@@ -9,8 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/feedback";
 import Link from "next/link";
-import { Briefcase, Calendar, Clock, MapPin, TrendingUp, Plus, ExternalLink } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Briefcase, Calendar, Clock, Plus } from "lucide-react";
 import { STATUS_LABELS, STATUS_COLORS } from "@/lib/application-constants";
 
 interface DashboardViewProps {

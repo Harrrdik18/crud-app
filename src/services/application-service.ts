@@ -9,9 +9,7 @@ import {
 import { getDb } from "@/db";
 import {
   applicationSchema,
-  applicationQuerySchema,
   statusChangeSchema,
-  type ApplicationInput,
   type ApplicationQuery,
   type ApplicationStatus,
 } from "@/lib/validation/schemas";

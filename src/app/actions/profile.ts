@@ -9,7 +9,7 @@ import {
   upsertSkills,
   ProfileError,
 } from "@/services/profile-service";
-import { profileSchema, resumeSchema, skillsBulkSchema } from "@/lib/validation/schemas";
+import { skillsBulkSchema } from "@/lib/validation/schemas";
 
 export interface ActionResult {
   ok?: boolean;
