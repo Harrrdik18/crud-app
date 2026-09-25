@@ -1,6 +1,6 @@
 # JobHunt OS
 
-> **A builder's note.** I built it as I would continue it. You said you didn't want a normal
+> **Note.** I built it as I would continue it. You said you didn't want a normal
 > app, so I added AI — and I honestly think this has a real use case. This isn't a CRUD demo
 > with a fresh coat of paint: it's the tool I'd actually keep using through a job search, and
 > the code is written the way I'd keep maintaining it.
