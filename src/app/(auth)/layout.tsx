@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { optionalUser } from "@/lib/auth";
 import { Logo } from "@/components/brand/logo";
+import { DeveloperFooter } from "@/components/brand/developer-footer";
 
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
   const user = await optionalUser();
@@ -21,6 +22,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
         </Link>
       </header>
       <main className="flex flex-1 items-center justify-center px-4 py-12">{children}</main>
+      <DeveloperFooter className="mx-auto w-full max-w-md px-4 pb-8" />
     </div>
   );
 }

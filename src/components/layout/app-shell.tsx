@@ -16,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
+import { DeveloperFooter } from "@/components/brand/developer-footer";
 import { Button } from "@/components/ui/button";
 import { cn, initials } from "@/lib/utils";
 import { logoutAction } from "@/app/actions/auth";
@@ -138,7 +139,10 @@ export function AppShell({ user, children }: AppShellProps) {
       </header>
 
       <main id="main" className="lg:pl-64">
-        <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-10">{children}</div>
+        <div className="mx-auto flex min-h-svh w-full max-w-6xl flex-col px-4 py-8 sm:px-6 lg:px-10">
+          <div className="flex-1">{children}</div>
+          <DeveloperFooter className="mt-10 border-t border-slate-200 pt-5 dark:border-slate-800" />
+        </div>
       </main>
     </div>
   );

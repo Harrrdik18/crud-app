@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { GithubIcon, LinkedinIcon } from "@/components/brand/social-icons";
+import { BUILDER_NOTE, DEVELOPER_NAME, SOCIAL_LINKS } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Understand your job search. Not just your applications.",
@@ -295,6 +297,42 @@ export default function LandingPage() {
               What skills do companies keep asking for? If the data doesn&apos;t support an
               insight, the product won&apos;t invent it.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Builder's note */}
+      <section className="border-t border-slate-100 bg-white dark:border-slate-800 dark:bg-slate-950">
+        <div className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-8 dark:border-slate-800 dark:bg-slate-900/60">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-primary-600 dark:text-primary-400" aria-hidden="true" />
+              <p className="text-sm font-semibold uppercase tracking-wider text-primary-600 dark:text-primary-400">
+                Builder&apos;s note
+              </p>
+            </div>
+            <blockquote className="mt-4 text-xl font-medium leading-relaxed text-slate-800 dark:text-slate-100">
+              {BUILDER_NOTE}
+            </blockquote>
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-500 dark:text-slate-400">
+              <span className="font-medium text-slate-700 dark:text-slate-200">{DEVELOPER_NAME}</span>
+              <a
+                href={SOCIAL_LINKS.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 hover:text-slate-900 dark:hover:text-white"
+              >
+                <GithubIcon className="h-4 w-4" aria-hidden="true" /> GitHub
+              </a>
+              <a
+                href={SOCIAL_LINKS.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 hover:text-slate-900 dark:hover:text-white"
+              >
+                <LinkedinIcon className="h-4 w-4" aria-hidden="true" /> LinkedIn
+              </a>
+            </div>
           </div>
         </div>
       </section>
