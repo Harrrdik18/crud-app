@@ -18,8 +18,8 @@ where you're short.
 ## Why this exists
 
 Job seekers currently juggle a spreadsheet, five browser tabs, a calendar, and a doc full of
-half-written follow-up notes. The information they need most — *"which of my applications is
-going cold?"*, *"what does this job actually require?"*, *"am I even a fit?"* — is trapped across
+half-written follow-up notes. The information they need most — _"which of my applications is
+going cold?"_, _"what does this job actually require?"_, _"am I even a fit?"_ — is trapped across
 all of them.
 
 JobHunt OS answers those questions from data the user already entered. No generic advice, no
@@ -29,17 +29,17 @@ invented metrics: every number on the dashboard is computed from the user's own 
 
 ## Features
 
-| Area | What it does |
-| --- | --- |
-| **Auth** | Register/login with Argon2-style hardened hashing (scrypt via `node:crypto`), server-side sessions stored as hashed tokens, sliding renewal, logout everywhere, password change. |
-| **Applications** | Full CRUD: create, read, update, delete, list with filters/search/sort, plus a status-driven kanban pipeline (Saved → Applied → Screening → Interview → Offer → Rejected → Withdrawn). |
-| **Status history** | Every pipeline move is appended to `status_history`, so the pipeline is auditable, not just the current state. |
-| **Interviews** | CRUD tied to an application: type, schedule, duration, interviewer, result, feedback. |
-| **Follow-ups** | CRUD reminders with due dates and pending/done/skipped states — surfaced on the dashboard so nothing rots. |
-| **Resume / profile** | Single source of truth: skills, experience, education, projects. Everything downstream (matching, analysis) reads from it. |
-| **Job Match (AI)** | Paste a job description → structured extraction (required/preferred skills, technologies, responsibilities, experience) + a profile-vs-job match with matching skills, gaps, and an experience assessment. |
-| **Analytics** | Funnel conversion, response rate, interview conversion, source effectiveness, weekly application volume. |
-| **Accessibility** | Semantic landmarks, `aria-current` navigation, labelled dialogs, visible focus states, keyboard-operable kanban, dark mode. |
+| Area                 | What it does                                                                                                                                                                                               |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Auth**             | Register/login with Argon2-style hardened hashing (scrypt via `node:crypto`), server-side sessions stored as hashed tokens, sliding renewal, logout everywhere, password change.                           |
+| **Applications**     | Full CRUD: create, read, update, delete, list with filters/search/sort, plus a status-driven kanban pipeline (Saved → Applied → Screening → Interview → Offer → Rejected → Withdrawn).                     |
+| **Status history**   | Every pipeline move is appended to `status_history`, so the pipeline is auditable, not just the current state.                                                                                             |
+| **Interviews**       | CRUD tied to an application: type, schedule, duration, interviewer, result, feedback.                                                                                                                      |
+| **Follow-ups**       | CRUD reminders with due dates and pending/done/skipped states — surfaced on the dashboard so nothing rots.                                                                                                 |
+| **Resume / profile** | Single source of truth: skills, experience, education, projects. Everything downstream (matching, analysis) reads from it.                                                                                 |
+| **Job Match (AI)**   | Paste a job description → structured extraction (required/preferred skills, technologies, responsibilities, experience) + a profile-vs-job match with matching skills, gaps, and an experience assessment. |
+| **Analytics**        | Funnel conversion, response rate, interview conversion, source effectiveness, weekly application volume.                                                                                                   |
+| **Accessibility**    | Semantic landmarks, `aria-current` navigation, labelled dialogs, visible focus states, keyboard-operable kanban, dark mode.                                                                                |
 
 ### The AI part (and why it's not a gimmick)
 
@@ -59,17 +59,17 @@ the same posting is free.
 
 ## Tech stack
 
-| Layer | Choice |
-| --- | --- |
-| Framework | **Next.js 16** (App Router, Server Components, Server Actions, `src/proxy.ts`) |
-| Language | **TypeScript** (strict) |
-| Styling | **Tailwind CSS v4** + hand-rolled shadcn-style components in `src/components/ui` |
-| Database | **PostgreSQL** via **Drizzle ORM** (typed schema, migrations in `drizzle/migrations`) |
-| Validation | **Zod** on every Server Action boundary |
-| Auth | Custom session auth — HMAC-signed cookie holding a random token, SHA-256-hashed at rest |
-| AI | OpenAI-compatible chat completions (`gpt-4o-mini`), optional |
-| Testing | **Vitest** (unit) + integration suite against a real Postgres |
-| CI | **GitHub Actions** — typecheck, lint, unit tests, then integration tests against Postgres 16 |
+| Layer      | Choice                                                                                       |
+| ---------- | -------------------------------------------------------------------------------------------- |
+| Framework  | **Next.js 16** (App Router, Server Components, Server Actions, `src/proxy.ts`)               |
+| Language   | **TypeScript** (strict)                                                                      |
+| Styling    | **Tailwind CSS v4** + hand-rolled shadcn-style components in `src/components/ui`             |
+| Database   | **PostgreSQL** via **Drizzle ORM** (typed schema, migrations in `drizzle/migrations`)        |
+| Validation | **Zod** on every Server Action boundary                                                      |
+| Auth       | Custom session auth — HMAC-signed cookie holding a random token, SHA-256-hashed at rest      |
+| AI         | OpenAI-compatible chat completions (`gpt-4o-mini`), optional                                 |
+| Testing    | **Vitest** (unit) + integration suite against a real Postgres                                |
+| CI         | **GitHub Actions** — typecheck, lint, unit tests, then integration tests against Postgres 16 |
 
 ### Project structure
 
@@ -92,7 +92,7 @@ test/                   # integration tests (real Postgres)
 **Data flow:** Route (Server Component) → `services/*` (authorization + rules) → Drizzle →
 Postgres. Mutations go through Server Actions → Zod → service → DB, then `revalidatePath`.
 Nothing reaches the DB from a component, and every service scopes queries by `userId` — a user
-can never read or mutate another user's rows even if they guess a UUID.
+can never read or muutate another user's rows even if they guess a UUID.
 
 ---
 
@@ -109,12 +109,12 @@ npm run dev                 # http://localhost:3000
 
 ### Environment
 
-| Variable | Purpose |
-| --- | --- |
-| `DATABASE_URL` | Postgres connection string |
-| `AUTH_SECRET` | Signs session cookies — `openssl rand -base64 32` |
-| `AI_API_KEY` | Optional. Leave empty → offline heuristic mode |
-| `NEXT_PUBLIC_APP_URL` | Canonical URL for metadata |
+| Variable              | Purpose                                           |
+| --------------------- | ------------------------------------------------- |
+| `DATABASE_URL`        | Postgres connection string                        |
+| `AUTH_SECRET`         | Signs session cookies — `openssl rand -base64 32` |
+| `AI_API_KEY`          | Optional. Leave empty → offline heuristic mode    |
+| `NEXT_PUBLIC_APP_URL` | Canonical URL for metadata                        |
 
 ### Scripts
 
@@ -147,18 +147,18 @@ CI runs typecheck + lint + unit tests on every push/PR, then integration tests a
 
 ## Security
 
-| Threat | Mitigation |
-| --- | --- |
-| Credential theft | Passwords hashed with a memory-hard KDF (`scrypt`, per-user salt, tuned cost) |
-| Session theft | Cookie is `httpOnly` + `secure` + `sameSite=lax`; DB stores only the SHA-256 of the token, so a DB leak doesn't yield live sessions |
-| XSS | Per-request CSP nonce with `strict-dynamic`, `frame-ancestors 'none'`, output is React-escaped |
-| CSRF | Server Actions origin check + `sameSite=lax` cookie + `form-action 'self'` |
-| SQL injection | Parameterised queries through Drizzle — no string-built SQL |
-| IDOR | Every service query filters by `userId`; ownership is checked before update/delete |
-| Brute force | In-memory sliding-window rate limiter on login/register (`src/lib/rate-limit.ts`) |
-| Clickjacking / MIME sniffing | `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff` |
-| Transport | HSTS with preload in production |
-| Spoofed client IPs | `x-forwarded-for` is parsed right-to-left and validated before use |
+| Threat                       | Mitigation                                                                                                                          |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Credential theft             | Passwords hashed with a memory-hard KDF (`scrypt`, per-user salt, tuned cost)                                                       |
+| Session theft                | Cookie is `httpOnly` + `secure` + `sameSite=lax`; DB stores only the SHA-256 of the token, so a DB leak doesn't yield live sessions |
+| XSS                          | Per-request CSP nonce with `strict-dynamic`, `frame-ancestors 'none'`, output is React-escaped                                      |
+| CSRF                         | Server Actions origin check + `sameSite=lax` cookie + `form-action 'self'`                                                          |
+| SQL injection                | Parameterised queries through Drizzle — no string-built SQL                                                                         |
+| IDOR                         | Every service query filters by `userId`; ownership is checked before update/delete                                                  |
+| Brute force                  | In-memory sliding-window rate limiter on login/register (`src/lib/rate-limit.ts`)                                                   |
+| Clickjacking / MIME sniffing | `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`                                                                          |
+| Transport                    | HSTS with preload in production                                                                                                     |
+| Spoofed client IPs           | `x-forwarded-for` is parsed right-to-left and validated before use                                                                  |
 
 **Contingency:** if `AUTH_SECRET` rotates, existing cookies fail signature verification and
 users are cleanly redirected to `/login` — no half-authenticated state. If the AI provider is
@@ -210,12 +210,12 @@ trace.
 
 ## Submission
 
-| Item | Value |
-| --- | --- |
-| Repository | https://github.com/Harrrdik18/crud-app |
-| Live deployment | _(Vercel — see README badge/URL once connected)_ |
-| Author | Hardik Patel — [GitHub](https://github.com/Harrrdik18) · [LinkedIn](https://www.linkedin.com/in/harrrdik18) |
-| CI/CD | `.github/workflows/ci.yml` → push to `main` → Vercel preview/production deploy |
+| Item            | Value                                                                                                       |
+| --------------- | ----------------------------------------------------------------------------------------------------------- |
+| Repository      | https://github.com/Harrrdik18/crud-app                                                                      |
+| Live deployment | _(Vercel — see README badge/URL once connected)_                                                            |
+| Author          | Hardik Patel — [GitHub](https://github.com/Harrrdik18) · [LinkedIn](https://www.linkedin.com/in/harrrdik18) |
+| CI/CD           | `.github/workflows/ci.yml` → push to `main` → Vercel preview/production deploy                              |
 
 **GitHub repository description** (About → Description):
 
